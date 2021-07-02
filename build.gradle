@@ -1,0 +1,56 @@
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "$kotlin_version"
+    id 'org.jetbrains.kotlin.plugin.spring' version "$kotlin_version"
+
+    id("org.springframework.boot") version "$spring_boot_version"
+    id("io.spring.dependency-management") version "1.0.11.RELEASE"
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = "com.mikhail-sycheuski.test"
+version = "0.0.1-SNAPSHOT"
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-cache")
+    implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+    implementation("org.springframework.boot:spring-boot-starter-hateoas")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.flywaydb:flyway-core")
+
+    runtimeOnly("org.postgresql:postgresql")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.security:spring-security-test")
+}
+
+def JAVA_VERSION = JavaVersion.VERSION_11
+
+sourceCompatibility = JAVA_VERSION
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = JAVA_VERSION
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = JAVA_VERSION
+    }
+}
