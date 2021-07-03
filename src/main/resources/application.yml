@@ -1,1 +1,46 @@
+spring:
+  application:
+    name: backend-inventory-service
 
+  flyway:
+    locations:
+      - classpath:db/migrations
+
+  jackson:
+    default-property-inclusion: NON_NULL
+    serialization:
+      write-dates-as-timestamps: false
+    deserialization:
+      fail-on-unknown-properties: false
+
+  app-data-source:
+    url: ${PRIMARY_DS_URL}
+    username: ${PRIMARY_DS_USERNAME}
+    password: ${PRIMARY_DS_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+    hikari:
+      poolName: primary
+      maximum-pool-size: 10
+      minimum-idle: 1
+      connection-test-query: 'SELECT 1'
+      connection-init-sql: 'SELECT 1'
+      connection-timeout: 10000
+      max-lifetime: 900000
+      leak-detection-threshold: 180000
+      idle-timeout: 600000
+
+  migration-data-source:
+    url: ${MIGRATION_DS_URL}
+    username: ${MIGRATION_DS_USERNAME}
+    password: ${MIGRATION_DS_PASSWORD}
+
+    hikari:
+      poolName: migration
+      maximum-pool-size: 2
+      minimum-idle: 0
+      connection-test-query: 'SELECT 1'
+      connection-init-sql: 'SELECT 1'
+      max-lifetime: 360000
+      idle-timeout: 120000
+      transactionIsolation: TRANSACTION_SERIALIZABLE

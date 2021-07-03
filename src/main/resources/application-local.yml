@@ -1,0 +1,14 @@
+server:
+  port: 8090
+
+spring:
+
+  app-data-source:
+    url: jdbc:postgresql://localhost:5432/warehouse
+    username: admin
+    password: p@ssword1!
+
+  migration-data-source:
+    url: jdbc:postgresql://localhost:5432/warehouse
+    username: flyway
+    password: Flyw@y1234!
