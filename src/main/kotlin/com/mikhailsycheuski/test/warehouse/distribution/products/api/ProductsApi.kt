@@ -1,9 +1,10 @@
 package com.mikhailsycheuski.test.warehouse.distribution.products.api
 
-import com.mikhailsycheuski.test.warehouse.core.api.LocationBuilder
+import com.mikhailsycheuski.test.warehouse.core.api.PathBuilder
 import com.mikhailsycheuski.test.warehouse.distribution.products.api.ProductsApi.Companion.API_CONTEXT
 import com.mikhailsycheuski.test.warehouse.domain.products.model.Product
 import com.mikhailsycheuski.test.warehouse.distribution.products.service.ProductsService
+import com.mikhailsycheuski.test.warehouse.domain.exception.DomainObjectNotFountException
 import com.mikhailsycheuski.test.warehouse.domain.products.model.ProductUpdateRequest
 import org.springframework.core.convert.ConversionService
 import org.springframework.http.HttpHeaders
@@ -28,7 +29,7 @@ class ProductsApi(
     productsService
       .findProductById(productId)
       ?.let { conversionService.convert(it, ProductDTO::class.java) }
-      ?: throw RuntimeException("not found")
+      ?: throw DomainObjectNotFountException("Product with id[${productId}] doesn't exist")
 
   // TODO: change on paginated request/response
   @GetMapping
@@ -50,7 +51,7 @@ class ProductsApi(
       .let {
         ResponseEntity
           .status(CREATED)
-          .header(HttpHeaders.LOCATION, LocationBuilder.build(it))
+          .header(HttpHeaders.LOCATION, PathBuilder.buildResourceLocationPath(it))
           .build()
       }
 

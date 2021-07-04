@@ -1,11 +1,11 @@
 package com.mikhailsycheuski.test.warehouse.distribution.articles.api
 
-import com.mikhailsycheuski.test.warehouse.core.api.LocationBuilder
+import com.mikhailsycheuski.test.warehouse.core.api.PathBuilder
 import com.mikhailsycheuski.test.warehouse.domain.articles.model.Article
 import com.mikhailsycheuski.test.warehouse.distribution.articles.api.ArticlesApi.Companion.API_CONTEXT
 import com.mikhailsycheuski.test.warehouse.distribution.articles.service.ArticlesService
-import com.mikhailsycheuski.test.warehouse.distribution.products.api.ProductDTO
 import com.mikhailsycheuski.test.warehouse.domain.articles.model.ArticleUpdateRequest
+import com.mikhailsycheuski.test.warehouse.domain.exception.DomainObjectNotFountException
 import org.springframework.core.convert.ConversionService
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -28,7 +28,7 @@ class ArticlesApi(
     articlesService
       .findArticleById(articleId)
       ?.let { conversionService.convert(it, ArticleDTO::class.java)!! }
-      ?: throw RuntimeException("not found")
+      ?: throw DomainObjectNotFountException("Article with id[${articleId}] doesn't exist")
 
   // TODO: change on paginated request/response
   @GetMapping
@@ -48,7 +48,7 @@ class ArticlesApi(
       .let {
         ResponseEntity
           .status(HttpStatus.CREATED)
-          .header(HttpHeaders.LOCATION, LocationBuilder.build(it))
+          .header(HttpHeaders.LOCATION, PathBuilder.buildResourceLocationPath(it))
           .build()
       }
 
