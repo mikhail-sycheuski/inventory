@@ -7,6 +7,7 @@ import com.mikhailsycheuski.test.warehouse.domain.products.model.ProductUpdateRe
 import com.mikhailsycheuski.test.warehouse.domain.validation.DomainObjectValidator
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
 @Component
 class UpdateProductUseCase(
@@ -15,6 +16,7 @@ class UpdateProductUseCase(
   private val productContainedArticleItemsValidator: DomainObjectValidator<Product>
 ) {
 
+  @Transactional
   fun execute(productUpdateRequest: ProductUpdateRequest) {
     productsRepository
       .findById(productUpdateRequest.id)

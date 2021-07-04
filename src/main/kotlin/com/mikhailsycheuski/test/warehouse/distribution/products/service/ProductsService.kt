@@ -9,4 +9,6 @@ interface ProductsService {
   fun findProductByName(productName: String): Product?
   fun addProduct(product: Product)
   fun updateProduct(productUpdateRequest: ProductUpdateRequest)
+  //TODO: change to paginated request/response
+  fun getAvailableProducts(): Map<Product, Int>
 }

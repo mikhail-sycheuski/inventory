@@ -26,6 +26,10 @@ class ProductsRepositoryImplPostgres(
       .findByName(productName)
       ?.asDomain()
 
+  @Transactional(readOnly = true)
+  override fun findAllProducts(): List<Product> =
+    productsRepositoryDataJDBCPort.findAll().map { it.asDomain() }
+
   @Transactional
   override fun save(product: Product) {
     productsRepositoryDataJDBCPort

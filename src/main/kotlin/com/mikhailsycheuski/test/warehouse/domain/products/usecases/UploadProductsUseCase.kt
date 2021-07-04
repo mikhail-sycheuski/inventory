@@ -7,6 +7,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
 
 @Component
@@ -16,6 +17,7 @@ class UploadProductsUseCase(
   private val productContainedArticleItemsValidator: DomainObjectValidator<Product>
 ) {
 
+  @Transactional
   fun execute(products: List<Product>) {
     products.forEach { createOrUpdateProduct(it) }
   }

@@ -20,6 +20,10 @@ class ArticlesRepositoryImplPostgres(
       ?.asDomain()
 
   @Transactional(readOnly = true)
+  override fun findAll(): List<Article> =
+    articlesRepositoryDataJDBCPort.findAll().map { it.asDomain() }
+
+  @Transactional(readOnly = true)
   override fun findAllByIds(articleIds: Collection<Long>): List<Article> =
     articlesRepositoryDataJDBCPort
       .findAllByIds(articleIds)

@@ -1,10 +1,7 @@
 package com.mikhailsycheuski.test.warehouse.distribution.products.converters
 
 import com.mikhailsycheuski.test.warehouse.core.extensions.SelfRegisteringConverter
-import com.mikhailsycheuski.test.warehouse.distribution.products.api.ContainedArticleItemDTO
-import com.mikhailsycheuski.test.warehouse.distribution.products.api.CreateProductRequestDTO
-import com.mikhailsycheuski.test.warehouse.distribution.products.api.ProductDTO
-import com.mikhailsycheuski.test.warehouse.distribution.products.api.UpdateProductRequestDTO
+import com.mikhailsycheuski.test.warehouse.distribution.products.api.*
 import com.mikhailsycheuski.test.warehouse.distribution.products.service.imports.ContainedArticleJsonImportRepresentation
 import com.mikhailsycheuski.test.warehouse.distribution.products.service.imports.ProductJsonImportRepresentation
 import com.mikhailsycheuski.test.warehouse.domain.products.model.Product
@@ -155,6 +152,21 @@ class ProductJsonImportRepresentationToProductConverter(
             ContainedArticleItem::class.java
           )!!
         }
+      )
+    }
+}
+
+@Component
+class ProductAvailabilityToDTOConverter(
+  converterRegistry: ConverterRegistry,
+  private val conversionService: ConversionService
+) : SelfRegisteringConverter<Pair<Product, Int>, ProductAvailabilityDTO>(converterRegistry) {
+
+  override fun convert(source: Pair<Product, Int>): ProductAvailabilityDTO =
+    with(source) {
+      ProductAvailabilityDTO(
+        product = conversionService.convert(first, ProductDTO::class.java)!!,
+        numberOfAvailable = second
       )
     }
 }

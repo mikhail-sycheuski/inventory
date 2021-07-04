@@ -5,6 +5,7 @@ import com.mikhailsycheuski.test.warehouse.domain.articles.model.Article
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
 
 @Component
@@ -12,6 +13,7 @@ class UploadArticlesUseCase(
   private val articlesRepository: ArticlesRepository
 ) {
 
+  @Transactional
   fun execute(articles: List<Article>) {
     articles.forEach { article ->
       articlesRepository
