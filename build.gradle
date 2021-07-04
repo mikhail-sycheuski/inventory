@@ -61,3 +61,7 @@ test {
         events "passed", "skipped", "failed"
     }
 }
+
+bootRun {
+    args = ["--spring.profiles.active=local"]
+}
