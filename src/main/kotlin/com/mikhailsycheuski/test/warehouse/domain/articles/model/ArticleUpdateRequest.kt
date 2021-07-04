@@ -2,5 +2,5 @@ package com.mikhailsycheuski.test.warehouse.domain.articles.model
 
 data class ArticleUpdateRequest(
   val id: Long,
-  val stock: Long
+  val increaseStockValue: Long
 )

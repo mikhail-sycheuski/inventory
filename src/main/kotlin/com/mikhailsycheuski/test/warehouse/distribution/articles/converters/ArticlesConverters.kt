@@ -62,7 +62,7 @@ class UpdateArticleRequestToArticleConverter(
     with(source) {
       ArticleUpdateRequest(
         id!!,
-        stock = stock
+        increaseStockValue = stock
       )
     }
 }

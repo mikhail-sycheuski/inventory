@@ -15,7 +15,7 @@ class UpdateArticleUseCase(
   fun execute(articleUpdateRequest: ArticleUpdateRequest) {
     articlesRepository
       .findById(articleUpdateRequest.id)
-      ?.let { articlesRepository.increaseStockBy(it.id!!, articleUpdateRequest.stock) }
+      ?.let { articlesRepository.increaseStockBy(it.id!!, articleUpdateRequest.increaseStockValue) }
       ?: throw DomainObjectNotFountException("Article with id[${articleUpdateRequest.id}] doesn't exist")
   }
 }
