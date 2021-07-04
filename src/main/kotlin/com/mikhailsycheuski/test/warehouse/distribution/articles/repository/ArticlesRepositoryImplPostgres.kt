@@ -12,7 +12,7 @@ class ArticlesRepositoryImplPostgres(
   private val articlesRepositoryDataJDBCPort: ArticlesRepositoryDataJDBCPort
 ) : ArticlesRepository {
 
-  @Transactional(readOnly = true)
+  //@Transactional(readOnly = true)
   override fun findById(articleId: Long): Article? =
     articlesRepositoryDataJDBCPort
       .findById(articleId)
@@ -60,13 +60,15 @@ class ArticlesRepositoryImplPostgres(
     ArticleRepresentation(
       id,
       name,
-      stock
+      stock,
+      version
     )
 
   private fun ArticleRepresentation.asDomain() =
     Article(
       id,
       name,
-      stock
+      stock,
+      version
     )
 }

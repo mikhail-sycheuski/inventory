@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
 
+// TODO: think about moving same logic
 // TODO: add batching execution here because there might be lots of products + paginated request/response
 @Component
 class GetProductsAvailabilityUseCase(
@@ -25,12 +26,13 @@ class GetProductsAvailabilityUseCase(
     var numberOfAvailableProductInstances = 0
 
     // TODO: articles need to be cached
-    val productArticlesMap = product
-      .containedArticleItems
-      .map { it.articleId }
-      .let { articlesRepository.findAllByIds(it) }
-      .map { it.toModifiableInstance() }
-      .associateBy { it.id!! }
+    val productArticlesMap =
+      product
+        .containedArticleItems
+        .map { it.articleId }
+        .let { articlesRepository.findAllByIds(it) }
+        .map { it.toModifiableInstance() }
+        .associateBy { it.id!! }
 
     while (isEnoughOfArticleStockForProduct(product, productArticlesMap)) {
       product

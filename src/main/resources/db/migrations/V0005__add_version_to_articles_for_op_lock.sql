@@ -1,0 +1,1 @@
+alter table t_articles add version bigint not null  default 0;

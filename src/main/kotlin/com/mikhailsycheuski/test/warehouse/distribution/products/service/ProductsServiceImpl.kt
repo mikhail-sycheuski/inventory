@@ -5,6 +5,7 @@ import com.mikhailsycheuski.test.warehouse.domain.products.model.Product
 import com.mikhailsycheuski.test.warehouse.domain.products.model.ProductUpdateRequest
 import com.mikhailsycheuski.test.warehouse.domain.products.usecases.AddNewProductUseCase
 import com.mikhailsycheuski.test.warehouse.domain.products.usecases.GetProductsAvailabilityUseCase
+import com.mikhailsycheuski.test.warehouse.domain.products.usecases.SellProductUseCase
 import com.mikhailsycheuski.test.warehouse.domain.products.usecases.UpdateProductUseCase
 import org.springframework.stereotype.Service
 
@@ -14,6 +15,7 @@ class ProductsServiceImpl(
   private val addProductUseCase: AddNewProductUseCase,
   private val updateProductUseCase: UpdateProductUseCase,
   private val getProductsAvailabilityUseCase: GetProductsAvailabilityUseCase,
+  private val sellProductUseCase: SellProductUseCase
 ) : ProductsService {
 
   override fun findProductById(productId: Long): Product? =
@@ -27,6 +29,10 @@ class ProductsServiceImpl(
 
   override fun addProduct(product: Product): Long =
     addProductUseCase.execute(product)
+
+  override fun sellProduct(productId: Long) {
+    sellProductUseCase.execute(productId)
+  }
 
   override fun updateProduct(productUpdateRequest: ProductUpdateRequest) {
     updateProductUseCase.execute(productUpdateRequest)

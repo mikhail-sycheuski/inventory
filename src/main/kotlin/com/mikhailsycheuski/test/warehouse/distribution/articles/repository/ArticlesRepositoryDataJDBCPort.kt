@@ -2,6 +2,7 @@ package com.mikhailsycheuski.test.warehouse.distribution.articles.repository
 
 import com.mikhailsycheuski.test.warehouse.distribution.articles.repository.ArticlesRepositoryDataJDBCPort.ArticleRepresentation
 import org.springframework.data.annotation.Id
+import org.springframework.data.annotation.Version
 import org.springframework.data.jdbc.repository.query.Modifying
 import org.springframework.data.jdbc.repository.query.Query
 import org.springframework.data.relational.core.mapping.Table
@@ -19,7 +20,8 @@ interface ArticlesRepositoryDataJDBCPort :
         t_articles.name, 
         t_articles.stock, 
         t_articles.created, 
-        t_articles.updated
+        t_articles.updated,
+        t_articles.version
       FROM t_articles 
       WHERE id IN (:ids)  
     """
@@ -27,17 +29,35 @@ interface ArticlesRepositoryDataJDBCPort :
   fun findAllByIds(ids: Collection<Long>): List<ArticleRepresentation>
 
   @Modifying
-  @Query("UPDATE t_articles SET stock = stock + :amount WHERE id = :articleId")
+  @Query(
+    """
+      UPDATE t_articles 
+      SET 
+        stock = stock + :amount, 
+        version = version + 1 
+      WHERE id = :articleId
+      
+    """
+  )
   fun increaseStockBy(articleId: Long, amount: Long)
 
   @Modifying
-  @Query("UPDATE t_articles SET stock = stock - :amount WHERE id = :articleId")
+  @Query(
+    """
+      UPDATE t_articles 
+      SET 
+        stock = stock - :amount, 
+        version = version + 1 
+      WHERE id = :articleId
+      """
+  )
   fun reduceStockBy(articleId: Long, amount: Long)
 
   @Table("t_articles")
   data class ArticleRepresentation(
     @Id val id: Long? = null,
     val name: String,
-    val stock: Long
+    val stock: Long,
+    @Version val version: Long? = null
   )
 }

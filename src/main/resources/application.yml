@@ -44,3 +44,8 @@ spring:
       max-lifetime: 360000
       idle-timeout: 120000
       transactionIsolation: TRANSACTION_SERIALIZABLE
+
+app:
+  useCases:
+    sellProductUseCase:
+      retryAttemptsLimit: 3

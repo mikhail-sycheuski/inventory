@@ -1,8 +1,8 @@
 package com.mikhailsycheuski.test.warehouse.distribution.products.service.imports
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.mikhailsycheuski.test.warehouse.core.service.FileImportProcessor
-import com.mikhailsycheuski.test.warehouse.core.service.FileImportProcessor.FileParsingException
+import com.mikhailsycheuski.test.warehouse.core.FileImportProcessor
+import com.mikhailsycheuski.test.warehouse.core.FileImportProcessor.FileParsingException
 import com.mikhailsycheuski.test.warehouse.domain.products.model.Product
 import com.mikhailsycheuski.test.warehouse.domain.products.usecases.UploadProductsUseCase
 import org.springframework.core.convert.ConversionService

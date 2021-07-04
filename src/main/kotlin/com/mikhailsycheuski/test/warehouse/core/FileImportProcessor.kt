@@ -1,4 +1,4 @@
-package com.mikhailsycheuski.test.warehouse.core.service
+package com.mikhailsycheuski.test.warehouse.core
 
 import com.mikhailsycheuski.test.warehouse.domain.exception.DomainObjectValidationException
 import org.springframework.web.multipart.MultipartFile

@@ -1,6 +1,6 @@
 package com.mikhailsycheuski.test.warehouse.distribution.products.api
 
-import com.mikhailsycheuski.test.warehouse.core.service.FileImportProcessor
+import com.mikhailsycheuski.test.warehouse.core.FileImportProcessor
 import com.mikhailsycheuski.test.warehouse.distribution.products.api.ProductsImportApi.Companion.API_CONTEXT
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpStatus

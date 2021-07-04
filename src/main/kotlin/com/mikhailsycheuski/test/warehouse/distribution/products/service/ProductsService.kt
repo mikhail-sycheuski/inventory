@@ -10,6 +10,7 @@ interface ProductsService {
   // TODO: change to paginated request/response
   fun findAllProducts(): List<Product>
   fun addProduct(product: Product): Long
+  fun sellProduct(productId: Long)
   fun updateProduct(productUpdateRequest: ProductUpdateRequest)
   // TODO: change to paginated request/response
   fun getAvailableProducts(): Map<Product, Int>

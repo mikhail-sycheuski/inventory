@@ -1,8 +1,8 @@
 package com.mikhailsycheuski.test.warehouse.distribution.articles.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.mikhailsycheuski.test.warehouse.core.service.FileImportProcessor
-import com.mikhailsycheuski.test.warehouse.core.service.FileImportProcessor.FileParsingException
+import com.mikhailsycheuski.test.warehouse.core.FileImportProcessor
+import com.mikhailsycheuski.test.warehouse.core.FileImportProcessor.FileParsingException
 import com.mikhailsycheuski.test.warehouse.distribution.articles.api.CreateArticleRequestDTO
 import com.mikhailsycheuski.test.warehouse.domain.articles.model.Article
 import com.mikhailsycheuski.test.warehouse.domain.articles.usecases.UploadArticlesUseCase
