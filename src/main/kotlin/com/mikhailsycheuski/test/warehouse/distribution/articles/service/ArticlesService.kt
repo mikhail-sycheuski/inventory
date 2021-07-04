@@ -8,6 +8,8 @@ interface ArticlesService {
 
   fun findArticleById(articleId: Long): Article?
   fun findArticleByName(articleName: String): Article?
+  // TODO: change to paginated request/response
+  fun findAllArticles(): List<Article>
   fun addArticle(article: Article)
   fun updateArticle(articleUpdateRequest: ArticleUpdateRequest)
 }

@@ -26,16 +26,15 @@ class ProductsApi(
       ?.let { conversionService.convert(it, ProductDTO::class.java) }
       ?: throw RuntimeException("not found")
 
+  // TODO: change on paginated request/response
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  fun getProductsByName(
-    @RequestParam("productName") productName: String
+  fun getProducts(
+    @RequestParam("name", required = false) productName: String? = null
   ): List<ProductDTO> =
-    productsService
-      .findProductByName(productName)
-      ?.let { conversionService.convert(it, ProductDTO::class.java) }
-      ?.let { listOf(it) }
-      ?: emptyList()
+    productName
+      ?.let { getProductsByName(it) }
+      ?: getAllProducts()
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
@@ -63,6 +62,18 @@ class ProductsApi(
       )!!
     )
   }
+
+  private fun getProductsByName(productName: String) =
+    productsService
+      .findProductByName(productName)
+      ?.let { conversionService.convert(it, ProductDTO::class.java) }
+      ?.let { listOf(it) }
+      ?: emptyList()
+
+  private fun getAllProducts() =
+    productsService
+      .findAllProducts()
+      .map { conversionService.convert(it, ProductDTO::class.java) }
 
   companion object {
     const val API_CONTEXT = "/api/v1/products"

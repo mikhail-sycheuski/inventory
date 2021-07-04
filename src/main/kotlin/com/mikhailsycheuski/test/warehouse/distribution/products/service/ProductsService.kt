@@ -7,8 +7,10 @@ import com.mikhailsycheuski.test.warehouse.domain.products.model.ProductUpdateRe
 interface ProductsService {
   fun findProductById(productId: Long): Product?
   fun findProductByName(productName: String): Product?
+  // TODO: change to paginated request/response
+  fun findAllProducts(): List<Product>
   fun addProduct(product: Product)
   fun updateProduct(productUpdateRequest: ProductUpdateRequest)
-  //TODO: change to paginated request/response
+  // TODO: change to paginated request/response
   fun getAvailableProducts(): Map<Product, Int>
 }

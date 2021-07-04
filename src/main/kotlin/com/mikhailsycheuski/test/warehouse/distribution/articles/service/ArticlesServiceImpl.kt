@@ -20,6 +20,9 @@ class ArticlesServiceImpl(
   override fun findArticleByName(articleName: String): Article? =
     articlesRepository.findByName(articleName)
 
+  override fun findAllArticles(): List<Article> =
+    articlesRepository.findAll()
+
   override fun addArticle(article: Article) {
     addNewArticleUseCase.execute(article)
   }

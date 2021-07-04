@@ -3,6 +3,7 @@ package com.mikhailsycheuski.test.warehouse.distribution.articles.api
 import com.mikhailsycheuski.test.warehouse.domain.articles.model.Article
 import com.mikhailsycheuski.test.warehouse.distribution.articles.api.ArticlesApi.Companion.API_CONTEXT
 import com.mikhailsycheuski.test.warehouse.distribution.articles.service.ArticlesService
+import com.mikhailsycheuski.test.warehouse.distribution.products.api.ProductDTO
 import com.mikhailsycheuski.test.warehouse.domain.articles.model.ArticleUpdateRequest
 import org.springframework.core.convert.ConversionService
 import org.springframework.http.HttpStatus
@@ -26,16 +27,13 @@ class ArticlesApi(
       ?.let { conversionService.convert(it, ArticleDTO::class.java)!! }
       ?: throw RuntimeException("not found")
 
+  // TODO: change on paginated request/response
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  fun getArticlesByName(
-    @RequestParam("name") articleName: String
-  ): List<ArticleDTO> =
-    articlesService
-      .findArticleByName(articleName)
-      ?.let { conversionService.convert(it, ArticleDTO::class.java)!! }
-      ?.let { listOf(it) }
-      ?: emptyList()
+  fun getArticles(@RequestParam("name", required = false) articleName: String? = null): List<ArticleDTO> =
+    articleName
+      ?.let { getArticlesByName(it) }
+      ?: getAllArticles()
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
@@ -58,6 +56,18 @@ class ArticlesApi(
       )!!
     )
   }
+
+  private fun getArticlesByName(articleName: String) =
+    articlesService
+      .findArticleByName(articleName)
+      ?.let { conversionService.convert(it, ArticleDTO::class.java)!! }
+      ?.let { listOf(it) }
+      ?: emptyList()
+
+  private fun getAllArticles() =
+    articlesService
+      .findAllArticles()
+      .map { conversionService.convert(it, ArticleDTO::class.java) }
 
   companion object {
     const val API_CONTEXT = "/api/v1/articles"

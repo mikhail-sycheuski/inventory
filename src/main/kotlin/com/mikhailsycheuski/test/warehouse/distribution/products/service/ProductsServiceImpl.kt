@@ -22,6 +22,9 @@ class ProductsServiceImpl(
   override fun findProductByName(productName: String): Product? =
     productsRepository.findByName(productName)
 
+  override fun findAllProducts(): List<Product> =
+    productsRepository.findAllProducts()
+
   override fun addProduct(product: Product) {
     addProductUseCase.execute(product)
   }
