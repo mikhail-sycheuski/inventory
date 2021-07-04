@@ -78,7 +78,7 @@ The database schema it represented by 3 primary tables organised in many-many re
 <!-- DB SCHEMA -->
 <br />
 <p align="center">
-  <img src="docs/images/db_schema.png.png" alt="Logo" width="50%" height="50%">
+  <img src="docs/images/db_schema.png" alt="Logo" width="50%" height="50%">
 </p>
 
 ### API Documentation
