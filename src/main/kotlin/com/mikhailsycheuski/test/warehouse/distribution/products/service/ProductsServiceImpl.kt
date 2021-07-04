@@ -25,9 +25,8 @@ class ProductsServiceImpl(
   override fun findAllProducts(): List<Product> =
     productsRepository.findAllProducts()
 
-  override fun addProduct(product: Product) {
+  override fun addProduct(product: Product): Long =
     addProductUseCase.execute(product)
-  }
 
   override fun updateProduct(productUpdateRequest: ProductUpdateRequest) {
     updateProductUseCase.execute(productUpdateRequest)

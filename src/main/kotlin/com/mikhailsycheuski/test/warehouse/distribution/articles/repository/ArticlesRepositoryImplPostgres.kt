@@ -36,9 +36,8 @@ class ArticlesRepositoryImplPostgres(
       ?.asDomain()
 
   @Transactional
-  override fun save(article: Article) {
-    articlesRepositoryDataJDBCPort.save(article.asRepresentation())
-  }
+  override fun save(article: Article): Long =
+    articlesRepositoryDataJDBCPort.save(article.asRepresentation()).id!!
 
   @Transactional
   override fun update(article: Article): Article =

@@ -1,12 +1,15 @@
 package com.mikhailsycheuski.test.warehouse.distribution.articles.api
 
+import com.mikhailsycheuski.test.warehouse.core.api.LocationBuilder
 import com.mikhailsycheuski.test.warehouse.domain.articles.model.Article
 import com.mikhailsycheuski.test.warehouse.distribution.articles.api.ArticlesApi.Companion.API_CONTEXT
 import com.mikhailsycheuski.test.warehouse.distribution.articles.service.ArticlesService
 import com.mikhailsycheuski.test.warehouse.distribution.products.api.ProductDTO
 import com.mikhailsycheuski.test.warehouse.domain.articles.model.ArticleUpdateRequest
 import org.springframework.core.convert.ConversionService
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
@@ -39,9 +42,15 @@ class ArticlesApi(
   @ResponseStatus(HttpStatus.CREATED)
   fun addArticle(
     @RequestBody @Valid createArticleRequest: CreateArticleRequestDTO
-  ) {
-    articlesService.addArticle(conversionService.convert(createArticleRequest, Article::class.java)!!)
-  }
+  ): ResponseEntity<Nothing> =
+    articlesService
+      .addArticle(conversionService.convert(createArticleRequest, Article::class.java)!!)
+      .let {
+        ResponseEntity
+          .status(HttpStatus.CREATED)
+          .header(HttpHeaders.LOCATION, LocationBuilder.build(it))
+          .build()
+      }
 
   @PatchMapping("/{articleId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)

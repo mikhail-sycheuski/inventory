@@ -1,11 +1,15 @@
 package com.mikhailsycheuski.test.warehouse.distribution.products.api
 
+import com.mikhailsycheuski.test.warehouse.core.api.LocationBuilder
 import com.mikhailsycheuski.test.warehouse.distribution.products.api.ProductsApi.Companion.API_CONTEXT
 import com.mikhailsycheuski.test.warehouse.domain.products.model.Product
 import com.mikhailsycheuski.test.warehouse.distribution.products.service.ProductsService
 import com.mikhailsycheuski.test.warehouse.domain.products.model.ProductUpdateRequest
 import org.springframework.core.convert.ConversionService
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatus.CREATED
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
@@ -37,17 +41,18 @@ class ProductsApi(
       ?: getAllProducts()
 
   @PostMapping
-  @ResponseStatus(HttpStatus.CREATED)
+  @ResponseStatus(CREATED)
   fun addProduct(
     @RequestBody @Valid createProductRequest: CreateProductRequestDTO
-  ) {
-    productsService.addProduct(
-      conversionService.convert(
-        createProductRequest,
-        Product::class.java
-      )!!
-    )
-  }
+  ): ResponseEntity<Nothing> =
+    productsService
+      .addProduct(conversionService.convert(createProductRequest, Product::class.java)!!)
+      .let {
+        ResponseEntity
+          .status(CREATED)
+          .header(HttpHeaders.LOCATION, LocationBuilder.build(it))
+          .build()
+      }
 
   @PatchMapping("/{productId}")
   @ResponseStatus(HttpStatus.NO_CONTENT)

@@ -13,7 +13,7 @@ interface ArticlesRepository {
   fun findAllByIds(articleIds: Collection<Long>): List<Article>
   fun findByName(articleName: String): Article?
   fun existsByName(articleName: String): Boolean = findByName(articleName)?.let { true } ?: false
-  fun save(article: Article)
+  fun save(article: Article): Long
   fun update(article: Article): Article
   fun increaseStockBy(articleId: Long, amount: Long)
   fun reduceStockBy(articleId: Long, amount: Long)

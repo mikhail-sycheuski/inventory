@@ -23,9 +23,8 @@ class ArticlesServiceImpl(
   override fun findAllArticles(): List<Article> =
     articlesRepository.findAll()
 
-  override fun addArticle(article: Article) {
+  override fun addArticle(article: Article): Long =
     addNewArticleUseCase.execute(article)
-  }
 
   override fun updateArticle(articleUpdateRequest: ArticleUpdateRequest) =
     addOrUpdateArticleUseCase.execute(articleUpdateRequest)

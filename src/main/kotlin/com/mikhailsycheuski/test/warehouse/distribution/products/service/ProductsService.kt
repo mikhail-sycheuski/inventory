@@ -9,7 +9,7 @@ interface ProductsService {
   fun findProductByName(productName: String): Product?
   // TODO: change to paginated request/response
   fun findAllProducts(): List<Product>
-  fun addProduct(product: Product)
+  fun addProduct(product: Product): Long
   fun updateProduct(productUpdateRequest: ProductUpdateRequest)
   // TODO: change to paginated request/response
   fun getAvailableProducts(): Map<Product, Int>

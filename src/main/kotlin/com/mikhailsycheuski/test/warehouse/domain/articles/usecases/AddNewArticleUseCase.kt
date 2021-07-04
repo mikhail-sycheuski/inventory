@@ -15,8 +15,8 @@ class AddNewArticleUseCase(
 ) {
 
   @Transactional
-  fun execute(article: Article) {
-    articleUniqueNameValidator.validate(article)
-    articlesRepository.save(article)
-  }
+  fun execute(article: Article): Long =
+    articleUniqueNameValidator
+      .validate(article)
+      .let { articlesRepository.save(article) }
 }

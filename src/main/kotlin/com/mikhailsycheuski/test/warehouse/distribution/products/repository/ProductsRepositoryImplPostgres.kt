@@ -31,10 +31,10 @@ class ProductsRepositoryImplPostgres(
     productsRepositoryDataJDBCPort.findAll().map { it.asDomain() }
 
   @Transactional
-  override fun save(product: Product) {
-    productsRepositoryDataJDBCPort
-      .save(product.asRepresentation())
-      .let { saveProductContainedArticleItems(it.id!!, product.containedArticleItems) }
+  override fun save(product: Product): Long {
+    val saved = productsRepositoryDataJDBCPort.save(product.asRepresentation())
+    saveProductContainedArticleItems(saved.id!!, product.containedArticleItems)
+    return saved.id!!
   }
 
   @Transactional

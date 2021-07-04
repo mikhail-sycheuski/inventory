@@ -16,8 +16,8 @@ class AddNewProductUseCase(
 ) {
 
   @Transactional
-  fun execute(product: Product) {
-    productUniqueNameValidator.validate(product)
-    productsRepository.save(product);
-  }
+  fun execute(product: Product): Long =
+    productUniqueNameValidator
+      .validate(product)
+      .let { productsRepository.save(product) }
 }

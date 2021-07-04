@@ -11,6 +11,6 @@ interface ProductsRepository {
   // TODO: change on paginated response
   fun findAllProducts(): List<Product>
   fun existsByName(productName: String): Boolean = findByName(productName)?.let { true } ?: false
-  fun save(product: Product)
+  fun save(product: Product): Long
   fun update(product: Product)
 }
