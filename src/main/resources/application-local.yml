@@ -12,3 +12,12 @@ spring:
     url: jdbc:postgresql://localhost:5432/warehouse
     username: flyway
     password: Flyw@y1234!
+
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+        web: INFO
+        jdbc:
+          core: TRACE

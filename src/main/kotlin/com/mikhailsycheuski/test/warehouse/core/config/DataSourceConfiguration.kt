@@ -1,4 +1,4 @@
-package com.mikhailsycheuski.test.warehouse.config
+package com.mikhailsycheuski.test.warehouse.core.config
 
 import com.zaxxer.hikari.HikariDataSource
 import org.springframework.beans.factory.annotation.Qualifier
@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.data.auditing.DateTimeProvider
-import org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration
 import org.springframework.data.jdbc.repository.config.EnableJdbcAuditing
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories
 import org.springframework.jdbc.core.JdbcOperations
@@ -18,7 +17,6 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.jdbc.datasource.DataSourceTransactionManager
-import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.transaction.annotation.EnableTransactionManagement
 import java.time.LocalDateTime
@@ -29,18 +27,10 @@ import javax.sql.DataSource
 @Configuration
 @ConditionalOnClass(DataSource::class)
 @EnableJdbcRepositories(basePackages = ["com.mikhailsycheuski.test.warehouse"])
-@EnableJdbcAuditing(
-  modifyOnCreate = false,
-  dateTimeProviderRef = "dateTimeProvider"
-)
 @EnableTransactionManagement
 class DataSourceConfiguration {
 
   // Core configurations -----------------------------------------------------------------------------------------------
-
-  @Bean
-  fun dateTimeProvider(): DateTimeProvider =
-    DateTimeProvider { Optional.of(LocalDateTime.now(ZoneOffset.UTC)) }
 
   @Bean
   @Primary
